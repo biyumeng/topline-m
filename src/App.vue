@@ -2,6 +2,15 @@
   <div id="app">
     <!-- 路由出口 -->
     <router-view />
+
+    <van-button type="default">默认按钮</van-button>
+    <van-button type="primary">主要按钮</van-button>
+    <van-button type="info">信息按钮</van-button>
+    <van-button type="warning">警告按钮</van-button>
+    <van-button type="danger">危险按钮</van-button>
+
+    <van-icon name="chat-o" color="#1989fa" />
+    <van-icon name="chat-o" color="#07c160" />
   </div>
 </template>
 
