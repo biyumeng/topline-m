@@ -11,7 +11,10 @@
 
     <van-icon name="chat-o" color="#1989fa" />
     <van-icon name="chat-o" color="#07c160" />
+
+    <div class="title">123</div>
   </div>
+
 </template>
 
 <script>
@@ -20,6 +23,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+  @import url("./styles/variables.less");
+  .title{
+    color: @color-primary;
+  }
 </style>
