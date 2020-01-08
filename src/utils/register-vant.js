@@ -4,10 +4,12 @@ import Vue from 'vue'
 import { Button,
   Icon,
   NavBar,
-  Field } from 'vant'
+  Field,
+  Toast } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
   .use(Icon)
   .use(NavBar)
   .use(Field)
+  .use(Toast)
