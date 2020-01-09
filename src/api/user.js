@@ -1,6 +1,7 @@
 // 用户相关的请求模块
 import request from '@/utils/request'
 
+// 登录
 export const login = (data) => {
   return request({
     method: 'POST',
@@ -8,7 +9,7 @@ export const login = (data) => {
     data
   })
 }
-
+// 发送验证码
 export const getSmsCode = (mobile) => {
   return request({
     method: 'GET',

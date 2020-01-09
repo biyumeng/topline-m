@@ -6,7 +6,7 @@
       />
 
       <!-- 登录表单 -->
-      <van-cell-group>
+      <ValidationObserver>
         <van-field
           class="form-item"
           v-model="user.mobile"
@@ -39,7 +39,7 @@
           @click="onSendSmsCode"
           round>发送验证码</van-button>
         </van-field>
-      </van-cell-group>
+      </ValidationObserver>
 
       <!-- 登录按钮 -->
       <div class="btn-wrap">

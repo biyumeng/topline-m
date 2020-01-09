@@ -10,6 +10,9 @@ import './utils/register-vant' // 注册vant组件
 // 加载全局样式
 import './styles/index.less'
 
+// 加载表单验证配置项
+import './utils/validation'
+
 Vue.config.productionTip = false
 
 new Vue({
