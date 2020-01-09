@@ -5,40 +5,57 @@
         title="登录"
       />
 
+      <!--
+      vee-validate 验证插件的具体使用
+      1、使用 ValidationObserver 把需要校验的整个表单包起来
+      2、使用 ValidationProvider 把需要校验的具体表单元素包起来，例如 input
+      3、通过 ValidationProvider 配置具体的校验规则
+        name      配置验证字段的名称
+        rules     验证规则
+          rules="requried" 单个验证规则
+          rules="required|length:4" 多个验证规则使用 | 分隔
+        v-slot="{ errors }" 获取错误消息
+     -->
       <!-- 登录表单 -->
-      <ValidationObserver>
-        <van-field
-          class="form-item"
-          v-model="user.mobile"
-          clearable
-          label="手机号"
-          placeholder="请输入手机号"
-        >
-          <i class="icon icon-shouji" slot="left-icon"></i>
-        </van-field>
-        <van-field
-          class="form-item"
-          label="验证码"
-          placeholder="请输入验证码"
-          v-model="user.code"
-        >
-          <i class="icon icon-mima" slot="left-icon"></i>
-          <!-- 倒计时组件 -->
-          <van-count-down
-          v-if="isCountShow"
-          :time="1000*60"
-          slot="button"
-          format=" ss s"
-          @finish="isCountShow=false"
-          />
-          <!-- 验证码按钮 -->
-          <van-button
-          v-else slot="button"
-          size="small"
-          type="primary"
-          @click="onSendSmsCode"
-          round>发送验证码</van-button>
-        </van-field>
+      <ValidationObserver ref="form">
+        <ValidationProvider name="手机号" rules="required|mobile">
+          <van-field
+            class="form-item"
+            v-model="user.mobile"
+            clearable
+            label="手机号"
+            placeholder="请输入手机号"
+          >
+            <i class="icon icon-shouji" slot="left-icon"></i>
+          </van-field>
+        </ValidationProvider>
+
+        <ValidationProvider name="验证码" rules="required|code">
+          <van-field
+            class="form-item"
+            label="验证码"
+            placeholder="请输入验证码"
+            v-model="user.code"
+          >
+            <i class="icon icon-mima" slot="left-icon"></i>
+            <!-- 倒计时组件 -->
+            <van-count-down
+            v-if="isCountShow"
+            :time="1000*60"
+            slot="button"
+            format=" ss s"
+            @finish="isCountShow=false"
+            />
+            <!-- 验证码按钮 -->
+            <van-button
+            v-else slot="button"
+            size="small"
+            type="primary"
+            @click="onSendSmsCode"
+            round>发送验证码</van-button>
+          </van-field>
+          </ValidationProvider>
+
       </ValidationObserver>
 
       <!-- 登录按钮 -->
@@ -70,7 +87,9 @@ export default {
   methods: {
     // 点击发送验证码
     async onSendSmsCode () {
+      // 获得手机号
       const { mobile } = this.user
+      // 发送验证码
       try {
         this.isCountShow = true
         await getSmsCode(mobile)
@@ -85,7 +104,31 @@ export default {
     },
     // 点击登录按钮
     async onLogin () {
+      // 获取表单数据
       const user = this.user
+
+      // 表单验证
+      const success = await this.$refs.form.validate()
+      // 如果验证失败，提示错误，停止表单提交
+      if (!success) {
+        // const { errors } = this.$refs.form
+        // console.log('验证失败', this.$refs.form)
+        setTimeout(() => {
+          const errors = this.$refs.form.errors
+          const item = Object.values(errors).find(item => item[0])
+          this.$toast(item[0])
+          console.log('验证失败', errors)
+          // // 第二种方法  使用for循环
+          // for (let key in errors) {
+          //   const item = errors[key]
+          //   if (item[0]) {
+          //     this.$toast(item[0])
+          //     return
+          //   }
+          // }
+        }, 100)
+        return
+      }
       // 开始转圈圈
       this.$toast.loading({
         duration: 0, // 持续时间，0表示持续展示不停止
