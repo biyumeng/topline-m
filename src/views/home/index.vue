@@ -5,7 +5,11 @@
 
     <!-- 频道列表 -->
     <van-tabs v-model="active">
-      <van-tab title="标签 1">
+      <van-tab
+      :title="channel.name"
+      v-for="channel in UserChannels"
+      :key="channel.id"
+      >
       <!-- 文章列表 -->
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list
@@ -22,15 +26,14 @@
           </van-list>
         </van-pull-refresh>
       </van-tab>
-      <van-tab title="标签 2">内容 2</van-tab>
-      <van-tab title="标签 3">内容 3</van-tab>
-      <van-tab title="标签 4">内容 4</van-tab>
     </van-tabs>
 
   </div>
 </template>
 
 <script>
+import { getUserChannels } from '@/api/user.js'
+// import { async } from 'q'
 export default {
   name: 'HomePage',
   data () {
@@ -39,7 +42,8 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      isLoading: false
+      isLoading: false,
+      UserChannels: [] // 用户频道列表
     }
   },
   methods: {
@@ -66,7 +70,15 @@ export default {
         this.isLoading = false
         this.count++
       }, 1000)
+    },
+    // 显示用户列表
+    async loadUserChannels () {
+      const { data } = await getUserChannels()
+      this.UserChannels = data.data.channels
     }
+  },
+  created () {
+    this.loadUserChannels()
   }
 }
 </script>
