@@ -6,7 +6,9 @@ import { Button,
   NavBar,
   Field,
   Toast,
-  CountDown } from 'vant'
+  CountDown,
+  Tabbar,
+  TabbarItem } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
@@ -15,3 +17,5 @@ Vue.use(Button)
   .use(Field)
   .use(Toast)
   .use(CountDown)
+  .use(Tabbar)
+  .use(TabbarItem)
