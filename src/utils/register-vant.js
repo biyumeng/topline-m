@@ -2,16 +2,23 @@ import Vue from 'vue'
 
 // 加载vant组件
 import { Button,
+  Cell,
+  CellGroup,
   Icon,
   NavBar,
   Field,
   Toast,
   CountDown,
   Tabbar,
-  TabbarItem } from 'vant'
+  TabbarItem,
+  Image,
+  Grid,
+  GridItem } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
+  .use(Cell)
+  .use(CellGroup)
   .use(Icon)
   .use(NavBar)
   .use(Field)
@@ -19,3 +26,6 @@ Vue.use(Button)
   .use(CountDown)
   .use(Tabbar)
   .use(TabbarItem)
+  .use(Image)
+  .use(Grid)
+  .use(GridItem)

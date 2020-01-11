@@ -151,6 +151,8 @@ export default {
         console.log(res)
         // 提示登录成功
         this.$toast.success('登录成功')
+        // 跳转到首页
+        this.$router.push('/')
       } catch (err) {
         console.log('登陆失败', err)
         // 提示登陆失败
