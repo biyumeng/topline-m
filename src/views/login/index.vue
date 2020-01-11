@@ -147,6 +147,7 @@ export default {
       })
       try {
         const res = await login(user)
+        this.$store.commit('setUser', res.data.data)
         console.log(res)
         // 提示登录成功
         this.$toast.success('登录成功')
