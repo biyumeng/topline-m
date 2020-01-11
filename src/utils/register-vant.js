@@ -13,7 +13,8 @@ import { Button,
   TabbarItem,
   Image,
   Grid,
-  GridItem } from 'vant'
+  GridItem,
+  Dialog } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
@@ -29,3 +30,4 @@ Vue.use(Button)
   .use(Image)
   .use(Grid)
   .use(GridItem)
+  .use(Dialog)
