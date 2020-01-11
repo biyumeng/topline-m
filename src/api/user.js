@@ -9,10 +9,19 @@ export const login = (data) => {
     data
   })
 }
+
 // 发送验证码
 export const getSmsCode = (mobile) => {
   return request({
     method: 'GET',
     url: `/app/v1_0/sms/codes/${mobile}`
+  })
+}
+
+// 获取当前登录用户个人信息
+export const getUserInfo = () => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/user'
   })
 }
