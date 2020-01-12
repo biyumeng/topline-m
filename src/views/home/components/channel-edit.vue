@@ -16,8 +16,19 @@
             :key="item.id"
             @click="onUserChannelClick(index)"
         >
-            <span class="text" :class="{active:value===index}">{{item.name}}</span>
-            <van-icon v-show="isEditShow" class="close-icon" slot="icon" name="close"></van-icon>
+        <!-- 显示的文字 -->
+            <span
+              slot="text"
+              class="text"
+              :class="{active:value===index}"
+            >
+                {{item.name}}
+            </span>
+            <van-icon
+             v-show="isEditShow && index!==0"
+              class="close-icon"
+               slot="icon" name="close"
+            ></van-icon>
         </van-grid-item>
       </van-grid>
 
@@ -87,9 +98,11 @@ export default {
     },
     // 点击删除频道
     onUserChannelClick (index) {
-      if (this.isEditShow) {
+      // 如果是编辑状态则可以删除
+      if (this.isEditShow && index !== 0) {
         this.userChannels.splice(index, 1)
       } else {
+        // 如果是完成状态
         this.$emit('input', index) // 修改激活的标签
         this.$emit('close') // 关闭弹层
       }
