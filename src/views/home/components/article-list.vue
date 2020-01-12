@@ -56,12 +56,20 @@ export default {
       }
     },
     // 下拉刷新
-    onRefresh () {
-      setTimeout(() => {
-        this.$toast('刷新成功')
-        this.isLoading = false
-        this.count++
-      }, 1000)
+    async onRefresh () {
+      // 请求获取数据
+      const { data } = await getArticles({
+        channel_id: this.channel.id,
+        timestamp: this.timestamp || Date.now(),
+        with_top: 1
+      })
+      // 将新数据放到列表顶部
+      const { results } = data.data
+      this.list.unshift(...results)
+      // 关闭下拉刷新的状态
+      this.isLoading = false
+      // 提示信息
+      this.$toast(`更新了${results.length}条数据`)
     }
   }
 }
