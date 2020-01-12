@@ -2,15 +2,22 @@
   <div class="channel-edit">
       <!-- 我的频道 -->
       <van-cell title="我的频道" :border="false">
-          <van-button size="mini" round type="danger" plain>编辑</van-button>
+          <van-button
+          @click="isEditShow=!isEditShow"
+          size="mini" round type="danger"
+          plain>
+          {{isEditShow?'完成':'编辑'}}
+          </van-button>
       </van-cell>
 
-      <van-grid :gutter="10">
+      <van-grid :gutter="10" :border="false">
         <van-grid-item
             v-for="item in userChannels"
             :key="item.id"
             :text="item.name"
-        />
+        >
+            <van-icon v-show="isEditShow" class="close-icon" slot="icon" name="close"></van-icon>
+        </van-grid-item>
       </van-grid>
 
       <!-- 推荐频道 -->
@@ -40,7 +47,8 @@ export default {
   },
   data () {
     return {
-      allChannels: [] // 所有频道
+      allChannels: [], // 所有频道
+      isEditShow: false // 编辑按钮的状态
     }
   },
   computed: {
@@ -76,8 +84,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .channel-edit{
     padding: 40px 0;
+    ::v-deep .van-grid-item__content{
+        position: relative;
+        .van-grid-item__icon-wrapper{
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            .close-icon{
+                font-size: 16px
+            }
+        }
+    }
 }
 </style>
