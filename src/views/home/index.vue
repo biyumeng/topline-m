@@ -23,7 +23,11 @@
       close-icon-position="top-left"
       :style="{ height: '100%' }"
     >
-      <channel-edit :user-channels="UserChannels"></channel-edit>
+      <channel-edit
+        :user-channels="UserChannels"
+        v-model="active"
+        @close="isChannelEditShow=false"
+      ></channel-edit>
     </van-popup>
   </div>
 </template>
@@ -41,7 +45,7 @@ export default {
   },
   data () {
     return {
-      active: 0,
+      active: 0, // 控制激活的标签页
       UserChannels: [], // 用户频道列表
       isChannelEditShow: false // 控制频道编辑弹窗是否开启 默认是false
     }

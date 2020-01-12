@@ -12,10 +12,11 @@
 
       <van-grid :gutter="10" :border="false">
         <van-grid-item
-            v-for="item in userChannels"
+            v-for="(item,index) in userChannels"
             :key="item.id"
-            :text="item.name"
+            @click="onUserChannelClick(index)"
         >
+            <span class="text" :class="{active:value===index}">{{item.name}}</span>
             <van-icon v-show="isEditShow" class="close-icon" slot="icon" name="close"></van-icon>
         </van-grid-item>
       </van-grid>
@@ -42,6 +43,10 @@ export default {
   props: {
     userChannels: {
       type: Array,
+      required: true
+    },
+    value: {
+      type: Number,
       required: true
     }
   },
@@ -79,6 +84,15 @@ export default {
     // 点击加入我的频道
     onAdd (channel) {
       this.userChannels.push(channel)
+    },
+    // 点击删除频道
+    onUserChannelClick (index) {
+      if (this.isEditShow) {
+        this.userChannels.splice(index, 1)
+      } else {
+        this.$emit('input', index) // 修改激活的标签
+        this.$emit('close') // 关闭弹层
+      }
     }
   }
 }
@@ -97,6 +111,12 @@ export default {
                 font-size: 16px
             }
         }
+    }
+    .text{
+        font-size: 14px;
+    }
+    .active{
+        color: red;
     }
 }
 </style>
