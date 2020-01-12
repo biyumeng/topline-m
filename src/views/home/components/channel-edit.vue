@@ -48,6 +48,8 @@
 
 <script>
 import { getAllChannels } from '@/api/channle.js'
+import { setItem } from '@/utils/storage'
+
 export default {
   name: 'ChannelEdit',
   components: {},
@@ -84,6 +86,12 @@ export default {
   },
   created () {
     this.loadAllChannels()
+  },
+  watch: {
+    // 当 userChannels 发生改变的时候，将该数据存储到本地存储
+    userChannels () {
+      setItem('user-channels', this.userChannels)
+    }
   },
   methods: {
     // 获取所有频道
