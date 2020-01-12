@@ -14,14 +14,13 @@
       </van-grid>
 
       <!-- 推荐频道 -->
-      <van-cell title="推荐频道" :border="false">
-      </van-cell>
+      <van-cell title="推荐频道" :border="false" />
 
       <van-grid :gutter="10">
         <van-grid-item
-            v-for="value in 8"
-            :key="value"
-            text="文字"
+            v-for="item in remainingChannels"
+            :key="item.id"
+            :text="item.name"
         />
       </van-grid>
   </div>
@@ -43,13 +42,29 @@ export default {
       allChannels: [] // 所有频道
     }
   },
+  computed: {
+    remainingChannels () {
+      const { allChannels, userChannels } = this
+      //   剩余频道=所有-我的
+      const channels = []
+      allChannels.forEach(item => {
+        //   如果我的频道中不包括遍历的频道
+        if (!userChannels.find(c => c.id === item.id)) {
+          channels.push(item)
+        }
+      })
+      //   console.log(channels)
+      return channels
+    }
+  },
   created () {
     this.loadAllChannels()
   },
   methods: {
     async loadAllChannels () {
       const { data } = await getAllChannels()
-      console.log(data)
+      //   console.log(data)
+      this.allChannels = data.data.channels
     }
   }
 }
