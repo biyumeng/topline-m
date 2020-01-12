@@ -7,9 +7,9 @@
 
       <van-grid :gutter="10">
         <van-grid-item
-            v-for="value in 8"
-            :key="value"
-            text="文字"
+            v-for="item in userChannels"
+            :key="item.id"
+            :text="item.name"
         />
       </van-grid>
 
@@ -29,7 +29,14 @@
 
 <script>
 export default {
-  name: 'ChannelEdit'
+  name: 'ChannelEdit',
+  components: {},
+  props: {
+    userChannels: {
+      type: Array,
+      required: true
+    }
+  }
 }
 </script>
 
