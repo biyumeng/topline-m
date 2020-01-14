@@ -19,7 +19,8 @@ import { Button,
   Tabs,
   List,
   PullRefresh,
-  Popup } from 'vant'
+  Popup,
+  Search } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
@@ -41,3 +42,4 @@ Vue.use(Button)
   .use(List)
   .use(PullRefresh)
   .use(Popup)
+  .use(Search)
