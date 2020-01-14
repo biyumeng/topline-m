@@ -14,14 +14,16 @@
       </form>
 
       <!-- 搜索结果 -->
-      <search-result v-if="isResultShow" />
+      <search-result v-if="isResultShow" :q="searchText" />
 
       <!-- 联系建议 -->
       <van-cell-group v-else-if="searchText">
         <van-cell
         icon="search"
         v-for="(item,index) in suggestions"
-        :key="index" >
+        :key="index"
+        @click="onSuggesttionClick(item)"
+        >
             <div slot="title" v-html="highlight(item)"></div>
         </van-cell>
       </van-cell-group>
@@ -84,6 +86,10 @@ export default {
     },
     highlight (str) {
       return str.toLowerCase().replace(this.searchText.toLowerCase(), `<span style="color:red;">${this.searchText}</span>`)
+    },
+    onSuggesttionClick (item) {
+      this.searchText = item
+      this.isResultShow = true
     }
   }
 }
