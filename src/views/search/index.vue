@@ -1,18 +1,22 @@
 <template>
   <div class="search-container">
       <!-- 搜索栏 -->
-      <form action="/">
+      <form class="search-form" action="/">
         <van-search
             v-model="searchText"
             placeholder="请输入搜索关键词"
             show-action
             @search="onSearch"
             @cancel="$router.back()"
+            @focus="isResultShow=false"
         />
       </form>
 
+      <!-- 搜索结果 -->
+      <search-result v-if="isResultShow" />
+
       <!-- 联系建议 -->
-      <van-cell-group>
+      <van-cell-group v-else-if="searchText">
         <van-cell title="单元格" icon="search" />
         <van-cell title="单元格" icon="search" />
         <van-cell title="单元格" icon="search" />
@@ -21,7 +25,7 @@
       </van-cell-group>
 
       <!-- 历史记录 -->
-      <van-cell-group>
+      <van-cell-group v-else>
         <van-cell title="历史记录">
             <van-icon name="delete"></van-icon>
             <span>全部删除</span>
@@ -42,8 +46,6 @@
         </van-cell>
       </van-cell-group>
 
-      <!-- 搜索结果 -->
-      <search-result />
   </div>
 </template>
 
@@ -57,17 +59,28 @@ export default {
   },
   data () {
     return {
-      searchText: ''
+      searchText: '',
+      isResultShow: false
     }
   },
   methods: {
     onSearch () {
       console.log('onSearch')
+      this.isResultShow = true
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped lang="less">
+    .search-container{
+        padding-top: 54px;
+        .search-form{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+    }
 </style>
