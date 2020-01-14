@@ -36,16 +36,11 @@
             &nbsp;&nbsp;
             <span>完成</span>
         </van-cell>
-        <van-cell title="单元格">
-            <van-icon name="close"></van-icon>
-        </van-cell>
-        <van-cell title="单元格">
-            <van-icon name="close"></van-icon>
-        </van-cell>
-        <van-cell title="单元格">
-            <van-icon name="close"></van-icon>
-        </van-cell>
-        <van-cell title="单元格">
+        <van-cell
+        :title="item"
+        v-for="(item,index) in searchHistories"
+        :key="index"
+        >
             <van-icon name="close"></van-icon>
         </van-cell>
       </van-cell-group>
@@ -56,6 +51,7 @@
 <script>
 import SearchResult from './components/search-result'
 import { getSuggestions } from '@/api/search.js'
+import { getItem, setItem } from '@/utils/storage'
 
 export default {
   name: 'SearchPage',
@@ -66,13 +62,24 @@ export default {
     return {
       searchText: '',
       isResultShow: false, // 控制是否显示搜索结果
-      suggestions: [] // 存储联想建议
+      suggestions: [], // 存储联想建议
+      searchHistories: getItem('search-histories') || [] // 搜索历史记录
+    }
+  },
+  watch: {
+    searchHistories (newVal) {
+      setItem('search-histories', newVal)
     }
   },
   methods: {
     // 打开搜索结果
     onSearch () {
-      console.log('onSearch')
+      // 记录搜索历史记录
+      const index = this.searchHistories.indexOf(this.searchText)
+      if (index !== -1) {
+        this.searchHistories.splice(index, 1)
+      }
+      this.searchHistories.unshift(this.searchText)
       this.isResultShow = true
     },
     // 获得联想建议
