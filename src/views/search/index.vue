@@ -19,10 +19,11 @@
       <!-- 联系建议 -->
       <van-cell-group v-else-if="searchText">
         <van-cell
-        :title="item"
         icon="search"
         v-for="(item,index) in suggestions"
-        :key="index" />
+        :key="index" >
+            <div slot="title" v-html="highlight(item)"></div>
+        </van-cell>
       </van-cell-group>
 
       <!-- 历史记录 -->
@@ -80,6 +81,9 @@ export default {
       }
       const { data } = await getSuggestions(searchText)
       this.suggestions = data.data.options
+    },
+    highlight (str) {
+      return str.toLowerCase().replace(this.searchText.toLowerCase(), `<span style="color:red;">${this.searchText}</span>`)
     }
   }
 }
