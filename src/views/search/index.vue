@@ -6,7 +6,7 @@
             v-model="searchText"
             placeholder="请输入搜索关键词"
             show-action
-            @search="onSearch"
+            @search="onSearch(searchText)"
             @cancel="$router.back()"
             @focus="isResultShow=false"
             @input="onSearchInput"
@@ -22,7 +22,7 @@
         icon="search"
         v-for="(item,index) in suggestions"
         :key="index"
-        @click="onSuggesttionClick(item)"
+        @click="onSearch(item)"
         >
             <div slot="title" v-html="highlight(item)"></div>
         </van-cell>
@@ -40,6 +40,7 @@
         :title="item"
         v-for="(item,index) in searchHistories"
         :key="index"
+        @click="onSearch(item)"
         >
             <van-icon name="close"></van-icon>
         </van-cell>
@@ -73,7 +74,8 @@ export default {
   },
   methods: {
     // 打开搜索结果
-    onSearch () {
+    onSearch (q) {
+      this.searchText = q
       // 记录搜索历史记录
       const index = this.searchHistories.indexOf(this.searchText)
       if (index !== -1) {
