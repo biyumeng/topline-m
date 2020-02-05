@@ -20,7 +20,8 @@ import { Button,
   List,
   PullRefresh,
   Popup,
-  Search } from 'vant'
+  Search,
+  Loading } from 'vant'
 
 // 注册vant组件
 Vue.use(Button)
@@ -43,3 +44,4 @@ Vue.use(Button)
   .use(PullRefresh)
   .use(Popup)
   .use(Search)
+  .use(Loading)
